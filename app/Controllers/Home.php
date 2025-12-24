@@ -1,14 +1,17 @@
 <?php
 
 namespace App\Controllers;
+
 use Config\Database;
 
 class Home extends BaseController
 {
     public function index(): string
     {
-        return view('welcome_message');
-
+        $data = [
+            'title' => 'Portal BPS Koltim'
+        ];
+        return view('user/index', $data);
     }
 }
 

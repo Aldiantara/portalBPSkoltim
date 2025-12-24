@@ -37,4 +37,23 @@ class DataPortalModel extends Model
         $hapus = $this->db->query("DELETE FROM layanan WHERE idLayanan = '$idLayanan'");
         return $hapus;
     }
+    //fungsi/query ambil data layanan berdasarkan id
+    public function getLayanan($idLayanan)
+    {
+        $data = $this->db->query("SELECT * FROM layanan WHERE idLayanan = '$idLayanan'")->getRow();
+        return $data;
+    }
+
+    // fungsi /query update data layanan
+    public function updateDataLayanan($idLayanan, $data)
+    {
+        $namaWebsite = $data['namaLayanan'];
+        $url = $data['url'];
+        $deskripsi = $data['deskripsiLayanan'];
+        $sampul = $data['gambarLayanan'];
+        $kategori = $data['kategori'];
+
+        $update = $this->db->query("UPDATE layanan SET namaLayanan = '$namaWebsite', url = '$url', deskripsiLayanan = '$deskripsi', gambarLayanan = '$sampul', kategori = '$kategori' WHERE idLayanan = '$idLayanan'");
+        return $update;
+    }
 }

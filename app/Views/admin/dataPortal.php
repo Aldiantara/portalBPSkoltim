@@ -59,7 +59,7 @@
             </div>
             <!-- akhir data Website -->
 
-            <!-- tambah data Website-->
+            <!-- tambah data Layanan-->
             <div class="col-xs-12 col-sm-12" id="form_tambah_data_web" style="display: none">
                 <div class="widget-box">
                     <div class="widget-header">
@@ -118,10 +118,83 @@
                                 <i class="ace-icon fa fa-floppy-o bigger-120 blue"></i>
                                 Simpan
                             </button>
-                            <!-- <button type="submit" id="Update"  class="btn btn-white btn-info btn-bold">
-                                    <i class="ace-icon fa fa-floppy-o bigger-120 blue"></i>
-                                    Update
-                                </button> -->
+                            <!-- <button type="submit" id="Update" class="btn btn-white btn-info btn-bold">
+                                <i class="ace-icon fa fa-floppy-o bigger-120 blue"></i>
+                                Update
+                            </button> -->
+                            <button Type="reset" class="btn btn-white btn-info btn-bold" onclick="batal_tambah_website()">
+                                <i class="ace-icon fa fa-times red2"></i>
+                                Batal
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- /.tutup tamabah data layanan -->
+
+            <!-- form edit data Layanan -->
+            <div class="col-xs-12 col-sm-12" id="form_update_data_web" style="display: none">
+                <div class="widget-box">
+                    <div class="widget-header">
+                        <h4 class="widget-title"><span id="titleUpdateWeb"></span></h4>
+                        <span class="widget-toolbar">
+                            <a href="#" data-action="collapse">
+                                <i class="ace-icon fa fa-chevron-up"></i>
+                            </a>
+                        </span>
+                    </div>
+                    <!-- <form method="POST" id="tambahWeb" enctype="multipart/form-data"> -->
+                    <form method="POST" id="updateWeb" enctype="multipart/form-data">
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                <!-- <div>
+                                    <label>Id Website</label>
+                                    <input type="text" id="idLayanan" name="idLayanan" class="form-control" />
+                                </div> -->
+                                <input type="hidden" id="idLayanan" name="idLayanan">
+                                <div>
+                                    <label>Nama website</label>
+                                    <input type="text" id="namaWebsite2" name="namaWebsite2" class="form-control" />
+                                </div>
+                                <div>
+                                    <label for="form-field-mask-2">
+                                        URL Website
+                                    </label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="ace-icon fa fa-link"></i>
+                                        </span>
+                                        <input class="form-control" type="text" id="url2" name="url2" />
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="gamabar">Sampul Website</label>
+                                    <input multiple="" type="file" id="sampul2" name="sampul2" class="form-control" />
+                                    <!-- <span id="GambarRumah"></span>
+                                        <input type="hidden" id="gbrLama" name="gbrLama"> -->
+                                </div>
+                                <div>
+                                    <label for="form-field-8">Deskripsi</label>
+                                    <textarea class="form-control" id="deskripsi2" name="deskripsi2" placeholder="Default Text"></textarea>
+                                </div>
+                                <div>
+                                    <label for="form-field-select-1">Kategori</label>
+                                    <select class="form-control" id="kategori2" name="kategori2">
+                                        <option value="" selected disabled>--Pilih--</option>
+                                        <option value="internal">Internal</option>
+                                        <option value="eksternal">Eksternal</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="widget-header">
+                            <!-- <button type="submit" id="simpan" class="btn btn-white btn-info btn-bold">
+                                <i class="ace-icon fa fa-floppy-o bigger-120 blue"></i>
+                                Simpan
+                            </button> -->
+                            <button type="submit" id="Update" class="btn btn-white btn-info btn-bold">
+                                <i class="ace-icon fa fa-floppy-o bigger-120 blue"></i>
+                                Update
+                            </button>
                             <button Type="reset" class="btn btn-white btn-info btn-bold" onclick="batal_tambah_website()">
                                 <i class="ace-icon fa fa-times red2"></i>
                                 Batal

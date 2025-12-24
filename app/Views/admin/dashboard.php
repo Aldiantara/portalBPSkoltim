@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -93,12 +93,11 @@
 
 						<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
 							<li>
-								<a href="#">
+								<a href="/Register">
 									<i class="ace-icon fa fa-cog"></i>
-									Settings
+									Buat Akun baru
 								</a>
 							</li>
-
 							<li>
 								<a href="profile.html">
 									<i class="ace-icon fa fa-user"></i>
@@ -272,18 +271,20 @@
 		function tambah_data_web() {
 			$('#form_data_web').hide();
 			$('#form_tambah_data_web').show();
+			$('#form_update_data_web').hide();
 			$('#titleTambahWeb').html('Tambah Data Website');
 		}
 
 		function batal_tambah_website() {
 			$('#form_tambah_data_web').hide();
 			$('#form_data_web').show();
+			$('#form_update_data_web').hide();
 		}
 
 		// js Tambah data website
 		$(document).ready(function() {
 			$('#tambahWeb').on('submit', function(e) {
-				// console.log("Masukk");
+				// console.log("Masukk"); 
 				let namaWebsite = $('#namaWebsite').val();
 				let url = $('#url').val();
 				let deskripsi = $('#deskripsi').val();
@@ -345,7 +346,7 @@
 					},
 					success: function(response) {
 						alert('Data berhasil dihapus!');
-						location.reload();
+						window.location.reload();
 					},
 					error: function(xhr, status, error) {
 						alert('Terjadi kesalahan saat menghapus data: ' + error);
@@ -356,8 +357,106 @@
 		// js tutup Hapus data website
 
 		// js Edit data website
+		function editDataLayanan(idLayanan) {
+			// console.log("ID Layanan: " + idLayanan); // Debugging line
+			$.ajax({
+				type: 'POST',
+				url: '/data-portal/getLayanan/',
+				dataType: 'JSON',
+				data: {
+					'idLayanan': idLayanan
+				},
+				success: function(data) {
+					// console.log(data); // Debugging line
 
+					// Isi form dengan data yang diambil
+					if (data.status == true) {
+						// tampilkan form edit
+						$('#form_data_web').hide();
+						$('#form_tambah_data_web').hide();
+						$('#form_update_data_web').show();
+						$('#titleUpdateWeb').html('Edit Data Website');
+
+						// isi data ke form
+						$('#idLayanan').val(data.data.idLayanan);
+						$('#namaWebsite2').val(data.data.namaLayanan);
+						$('#url2').val(data.data.url);
+						$('#sampul2').html('<img style ="height:80px; width:100px" src="/gambar/' + data.data.gambarLayanan + '">');
+						$('#deskripsi2').val(data.data.deskripsiLayanan);
+						$('#kategori2').val(data.data.kategori);
+					} else {
+						alert('Gagal mengambil data layanan.');
+						return;
+					}
+				},
+				error: function(xhr, status, error) {
+					alert('Terjadi kesalahan saat mengambil data: ' + error);
+				}
+			});
+		}
+
+		// fungsi update data website
+		$(document).ready(function() {
+			$('#updateWeb').on('submit', function(e) {
+				// console.log('idLayanan: ' + $('#idLayanan').val());
+				let namaWebsite = $('#namaWebsite2').val();
+				let url = $('#url2').val();
+				let deskripsi = $('#deskripsi2').val();
+				let kategori = $('#kategori2').val();
+
+				e.preventDefault();
+				var formData = new FormData(this);
+				$.ajax({
+					type: 'POST',
+					url: '/data-portal/updateLayanan',
+					data: formData,
+					cache: false,
+					contentType: false,
+					processData: false,
+					dataType: 'JSON',
+					success: function(data) {
+						if (data.status === true) {
+							alert('Data berhasil diupdate!');
+							location.reload();
+						} else {
+							alert('Gagal mengupdate data layanan.');
+							return;
+						}
+					},
+					error: function(xhr, status, error) {
+						alert('Terjadi kesalahan saat mengupdate data: ' + error);
+					}
+				});
+			});
+		});
 		// js tutup Edit data website
+
+		// resize the chosen on window resize
+		$('#sampul').ace_file_input({
+			no_file: 'No File ...',
+			btn_choose: 'Choose',
+			btn_change: 'Change',
+			droppable: false,
+			onchange: null,
+			thumbnail: false
+		});
+		$('#sampul2').ace_file_input({
+			no_file: 'No File ...',
+			btn_choose: 'Choose',
+			btn_change: 'Change',
+			droppable: false,
+			onchange: null,
+			thumbnail: false
+		});
+		$('#modal-form').on('shown.bs.modal', function() {
+			if (!ace.vars['touch']) {
+				$(this).find('.chosen-container').each(function() {
+					$(this).find('a:first-child').css('width', '210px');
+					$(this).find('.chosen-drop').css('width', '210px');
+					$(this).find('.chosen-search input').css('width', '200px');
+				});
+			}
+		});
 	</script>
 </body>
 

@@ -90,4 +90,80 @@ class DataPortal extends BaseController
         }
         echo json_encode($hasil);
     }
+    //tutup fungsi hapus data website
+
+    //fungsi ambil data layanan
+    function getLayanan()
+    {
+        $idLayanan = $this->request->getPost('idLayanan');
+
+        $dataLayanan = $this->dataPortalModel->getLayanan($idLayanan);
+        // var_dump($dataLayanan);
+        // die;
+        if ($dataLayanan) {
+            $hasil = [
+                'status' => '1',
+                'pesan' => 'Data layanan Berhasil Diambil',
+                'data' => $dataLayanan
+            ];
+        } else {
+            $hasil = [
+                'status' => '0',
+                'pesan' => 'Data layanan Gagal Diambil',
+                'data' => $dataLayanan
+            ];
+        }
+        echo json_encode($hasil);
+    }
+    //tutup fungsi ambil data layanan
+
+    //fungsi update data Layanan
+    public function updateLayanan()
+    {
+        $idLayanan  = $this->request->getPost('idLayanan');
+        $namaWebsite = $this->request->getPost('namaWebsite2');
+        $url        = $this->request->getPost('url2');
+        $deskripsi  = $this->request->getPost('deskripsi2');
+        $kategori   = $this->request->getPost('kategori2');
+
+        // Validasi data lama
+        $dataLama = $this->dataPortalModel->getLayanan($idLayanan);
+        if (!$dataLama) {
+            return $this->response->setJSON([
+                'status' => false,
+                'pesan' => 'Data tidak ditemukan'
+            ]);
+        }
+
+        $sampul = $dataLama->gambarLayanan;
+
+        // Validasi file upload
+        $gambar = $this->request->getFile('sampul2');
+        if ($gambar && $gambar->isValid() && !$gambar->hasMoved()) {
+
+            // hapus gambar lama
+            if ($sampul && file_exists('gambar/' . $sampul)) {
+                unlink('gambar/' . $sampul);
+            }
+
+            $sampul = $gambar->getRandomName();
+            $gambar->move('gambar', $sampul);
+        }
+
+        $data = [
+            'namaLayanan'        => $namaWebsite,
+            'url'                => $url,
+            'deskripsiLayanan'   => $deskripsi,
+            'gambarLayanan'     => $sampul,
+            'kategori'           => $kategori
+        ];
+        $update = $this->dataPortalModel->updateDataLayanan($idLayanan, $data);
+
+        return $this->response->setJSON([
+            'status' => $update ? true : false,
+            'pesan'  => $update ? 'Data berhasil diupdate' : 'Gagal update data'
+        ]);
+    }
+
+    //tutup fungsi update data Layanan
 }

@@ -40,7 +40,32 @@ abstract class BaseController extends Controller
         // Caution: Do not edit this line.
         parent::initController($request, $response, $logger);
 
+        $this->countVisitor();
+
         // Preload any models, libraries, etc, here.
         // $this->session = service('session');
+    }
+
+    //Menghitung jumlah visitor/pengunjung website
+    protected function countVisitor()
+    {
+        // debug
+        // var_dump("masukk");
+        // die;
+        //jangan hitung kalau admin login
+        if (session()->get('isLoggedIn') === true) {
+            return;
+        }
+        $visitorModel = new \App\Models\VisitorModel();
+
+        $ip    = $this->request->getIPAddress();
+        $date  = date('Y-m-d');
+        $agent = $this->request->getUserAgent()->getAgentString();
+
+        $cek = $visitorModel->cekVisit($ip, $date);
+
+        if ($cek == 0) {
+            $visitorModel->insertVisitor($ip, $date, $agent);
+        }
     }
 }

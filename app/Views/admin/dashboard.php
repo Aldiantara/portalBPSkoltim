@@ -21,6 +21,15 @@
 	<link rel="stylesheet" href="assets/css/daterangepicker.min.css" />
 	<link rel="stylesheet" href="assets/css/bootstrap-datetimepicker.min.css" />
 	<link rel="stylesheet" href="assets/css/bootstrap-colorpicker.min.css" />
+	<link rel="stylesheet" href="assets/css/responsive.bootstrap.min.css">
+
+
+	<!-- <link rel="stylesheet" href="assets/css/jquery.dataTables.min.css">
+	<link rel="stylesheet" href="assets/css/dataTables.bootstrap.min.css"> -->
+
+	<!-- RESPONSIVE -->
+	<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap.min.css">
+
 
 	<!-- text fonts -->
 	<link rel="stylesheet" href="assets/css/fonts.googleapis.com.css" />
@@ -49,6 +58,14 @@
 		<script src="assets/js/html5shiv.min.js"></script>
 		<script src="assets/js/respond.min.js"></script>
 		<![endif]-->
+
+	<!-- <style>
+		.table-responsive {
+			overflow-x: auto;
+			-webkit-overflow-scrolling: touch;
+		}
+	</style> -->
+
 </head>
 
 <body class="no-skin">
@@ -68,10 +85,10 @@
 			<div class="navbar-header pull-left">
 				<a href="#" class="navbar-brand">
 					<small style="display:flex; align-items:center; gap:8px;">
-						<img src="assets/images/logo/logo_bps.png" style="width: 50px; height: 50px;" alt="">
+						<img src="assets/images/logo/logo_bps.png" style="width: 30px; height: 30px;" alt="">
 						<div>
-							<p style="margin-top: 5px; margin: 0">Badan Pusat Statistik</p>
-							<p style="margin:0;font-size: 18px;">Kolaka Timur</p>
+							<p style="font-family:Georgia;">BPS KOLAKA TIMUR</p>
+							<!-- <p style="margin:0;font-size: 18px;">Kolaka Timur</p> -->
 						</div>
 
 					</small>
@@ -82,10 +99,10 @@
 				<ul class="nav ace-nav">
 					<li class="light-#0A2A43 dropdown-modal">
 						<a data-toggle="dropdown" href="#" class="dropdown-toggle">
-							<img class="nav-user-photo" src="assets/images/avatars/user.jpg" alt="Jason's Photo" />
+							<img class="nav-user-photo" src="assets/images/avatars/avatar2.png" alt="Jason's Photo" />
 							<span class="user-info">
 								<small>Welcome,</small>
-								Jason
+								<?php echo session()->get('namaLengkap') ?>
 							</span>
 
 							<i class="ace-icon fa fa-caret-down"></i>
@@ -99,7 +116,7 @@
 								</a>
 							</li>
 							<li>
-								<a href="profile.html">
+								<a href="#" onclick="showProfile()">
 									<i class="ace-icon fa fa-user"></i>
 									Profile
 								</a>
@@ -108,7 +125,7 @@
 							<li class="divider"></li>
 
 							<li>
-								<a href="#">
+								<a href="/logout">
 									<i class="ace-icon fa fa-power-off"></i>
 									Logout
 								</a>
@@ -137,7 +154,7 @@
 			<!-- ini Menu -->
 			<ul class="nav nav-list">
 				<li class="active">
-					<a href="/Dashboard">
+					<a href="/contentDashboard">
 						<i class="menu-icon fa fa-tachometer"></i>
 						<span class="menu-text"> Dashboard </span>
 					</a>
@@ -166,16 +183,14 @@
 							<i class="ace-icon fa fa-home home-icon"></i>
 							<a href="#"><?= str_replace("http://localhost:8080/", "", current_url()); ?></a>
 						</li>
-
-						<li>
-							<a href="#">Tables</a>
-						</li>
-						<li class="active">Simple &amp; Dynamic</li>
 					</ul><!-- /.breadcrumb -->
 				</div>
+
+				<!-- ini page content -->
 				<div class="page-content">
 					<?= $this->renderSection('content') ?>
 				</div><!-- /.page-content -->
+
 			</div>
 		</div><!-- /.main-content -->
 		<!-- ini header -->
@@ -191,7 +206,7 @@
 					&nbsp; &nbsp;
 					<span class="action-buttons">
 						<a href="#">
-							<i class="ace-icon fa fa-twitter-square light-blue bigger-150"></i>
+							<i class="ace-icon fa fa-instagram light-blue bigger-150"></i>
 						</a>
 
 						<a href="#">
@@ -199,7 +214,7 @@
 						</a>
 
 						<a href="#">
-							<i class="ace-icon fa fa-rss-square orange bigger-150"></i>
+							<i class="ace-icon fa fa-globe orange bigger-150"></i>
 						</a>
 					</span>
 				</div>
@@ -226,16 +241,6 @@
 	</script>
 	<script src="assets/js/bootstrap.min.js"></script>
 
-	<!-- page specific plugin scripts -->
-	<script src="assets/js/jquery.dataTables.min.js"></script>
-	<script src="assets/js/jquery.dataTables.bootstrap.min.js"></script>
-	<script src="assets/js/dataTables.buttons.min.js"></script>
-	<script src="assets/js/buttons.flash.min.js"></script>
-	<script src="assets/js/buttons.html5.min.js"></script>
-	<script src="assets/js/buttons.print.min.js"></script>
-	<script src="assets/js/buttons.colVis.min.js"></script>
-	<script src="assets/js/dataTables.select.min.js"></script>
-
 	<!--[if lte IE 8]>
 		  <script src="assets/js/excanvas.min.js"></script>
 		<![endif]-->
@@ -259,15 +264,46 @@
 	<script src="assets/js/jquery.flot.min.js"></script>
 	<script src="assets/js/jquery.flot.pie.min.js"></script>
 	<script src="assets/js/jquery.flot.resize.min.js"></script>
+	<script src="assets/js/chart.umd.min.js"></script>
+
+	<!-- page specific plugin scripts -->
+	<script src="assets/js/jquery.dataTables.min.js"></script>
+	<script src="assets/js/jquery.dataTables.bootstrap.min.js"></script>
+	<script src="assets/js/dataTables.buttons.min.js"></script>
+	<script src="assets/js/buttons.flash.min.js"></script>
+	<script src="assets/js/buttons.html5.min.js"></script>
+	<script src="assets/js/buttons.print.min.js"></script>
+	<script src="assets/js/buttons.colVis.min.js"></script>
+	<script src="assets/js/dataTables.select.min.js"></script>
+
+	<script src="assets/js/html2canvas.min.js"></script>
+	<script src="assets/js/jspdf.umd.min.js"></script>
+
+
+	<!-- RESPONSIVE -->
+	<script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+	<script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap.min.js"></script>
+
 
 	<!-- ace scripts -->
 	<script src="assets/js/ace-elements.min.js"></script>
 	<script src="assets/js/ace.min.js"></script>
-
-	<!-- inline scripts related to this page -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 	<!-- inline scripts related to this page -->
 	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#myTable').DataTable({
+				scrollX: true,
+				autoWidth: false,
+				paging: true,
+				ordering: true,
+				info: true,
+				responsive: true,
+				autoWidth: false
+			});
+		});
+
 		function tambah_data_web() {
 			$('#form_data_web').hide();
 			$('#form_tambah_data_web').show();
@@ -431,7 +467,143 @@
 		});
 		// js tutup Edit data website
 
+		//fungsi jquery untuk profile
+		function showProfile() {
+			Swal.fire({
+				title: 'Profil Pengguna',
+				html: `
+					<img src="<?= base_url('assets/images/avatars/avatar2.png') ?>" width="100" class="mb-3"><br>
+					<b style="font-weight: bold; font-size: 20px;">Nama: <?= session('namaLengkap') ?></b> <br>
+					<b style="font-weight: bold; font-size: 20px;">Username: <?= session('username') ?></b>
+				`,
+				showCloseButton: true,
+				confirmButtonText: 'Tutup'
+			});
+		}
+
+		//fungsi jquery grafik di dashboard
+		<?php if (isset($visitorBulanan) && isset($tahun)) : ?> //fungsi cek visitor bulanan dan tahunan jika ada
+			$(function() {
+
+				// CEK LINE CHART
+				const lineCanvas = document.getElementById('visitorChart');
+				if (lineCanvas) {
+					const ctxLine = lineCanvas.getContext('2d');
+
+					new Chart(ctxLine, {
+						type: 'line',
+						data: {
+							labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
+							datasets: [{
+								label: 'Jumlah Visitor <?= $tahun ?>',
+								data: <?= json_encode($visitorBulanan) ?>,
+								borderWidth: 2,
+								tension: 0.3
+							}]
+						},
+						options: {
+							plugins: {
+								title: {
+									display: true,
+									text: [
+										'Diagram Garis',
+									],
+									font: {
+										size: 18,
+										weight: 'bold'
+									},
+									padding: {
+										bottom: 5
+									}
+								}
+							}
+						}
+					});
+
+				}
+
+				// CEK BAR CHART
+				const barCanvas = document.getElementById('visitorBarChart');
+				if (barCanvas) {
+					const ctxBar = barCanvas.getContext('2d');
+
+					new Chart(ctxBar, {
+						type: 'bar',
+						data: {
+							labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
+							datasets: [{
+								label: 'Jumlah Visitor <?= $tahun ?>',
+								data: <?= json_encode($visitorBulanan) ?>,
+								borderWidth: 2,
+								tension: 0.3
+							}]
+						},
+						options: {
+							plugins: {
+								title: {
+									display: true,
+									text: [
+										'Diagram Batang',
+									],
+									font: {
+										size: 18,
+										weight: 'bold'
+									},
+									padding: {
+										bottom: 5
+									}
+								}
+							}
+						}
+					});
+				}
+
+				// PIE CHART
+				const pieCanvas = document.getElementById('visitorPieChart');
+				if (pieCanvas) {
+					const ctxPie = pieCanvas.getContext('2d');
+
+					new Chart(ctxPie, {
+						type: 'pie',
+						data: {
+							labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
+							datasets: [{
+								data: <?= json_encode($visitorBulanan) ?>,
+							}]
+						},
+						options: {
+							responsive: true,
+							maintainAspectRatio: false,
+							plugins: {
+								title: {
+									display: true,
+									text: [
+										'Diagram Lingkaran',
+										'Distribusi Visitor per Bulan <?= $tahun ?? "" ?>'
+									],
+									position: 'top',
+									font: {
+										size: 18,
+										weight: 'bold'
+									}
+								},
+								legend: {
+									position: 'bottom'
+								}
+							}
+						}
+					});
+				}
+
+			});
+		<?php endif; ?>
+		// tutup fungsi cek visitor bulanan dan tahunan jika ada
+
 		// resize the chosen on window resize
+		$(window).on('resize', function() {
+			$('#myTable').DataTable().columns.adjust().responsive.recalc();
+		});
+
 		$('#sampul').ace_file_input({
 			no_file: 'No File ...',
 			btn_choose: 'Choose',

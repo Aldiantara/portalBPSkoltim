@@ -14,7 +14,7 @@
 
     <!-- NAVBAR -->
     <nav>
-        <div class="logo">BPS KOLTIM <span>HUB</span></div>
+        <div class="logo">BPS KOLAKA<span>TIMUR</span></div>
         <ul>
             <li><a href="#">Beranda</a></li>
             <li><a href="#layanan">Layanan</a></li>
@@ -57,68 +57,69 @@
     <section id="layanan" class="layanan">
 
         <!-- CARD HEADER LAYANAN -->
-        <!-- CARD HEADER LAYANAN -->
         <div class="card-layanan-header">
-
             <div class="header-text">
                 <h2>
-                    <b>Portal ini menyediakan akses cepat ke seluruh website dan aplikasi resmi
-                        BPS Kabupaten Kolaka Timur</b>
+                    <b>Portal Layanan Digital BPS Kabupaten Kolaka Timur</b>
                 </h2>
+                <p class="header-subtitle" id="typingText"></p>
 
-                <p class="header-subtitle">
-                    Terintegrasi, aman, dan mudah diakses oleh pegawai maupun masyarakat
-                </p>
 
                 <span class="header-divider"></span>
             </div>
 
-            <form method="GET" class="kategori-form">
-                <button type="submit" name="kategori" value="semua"
-                    class="kategori-btn">
-                    Semua Layanan
-                </button>
-
-                <button type="submit" name="kategori" value="internal"
-                    class="kategori-btn ">
-                    Layanan Internal
-                </button>
-
-                <button type="submit" name="kategori" value="eksternal"
-                    class="kategori-btn">
-                    Layanan Publik
-                </button>
-            </form>
-
-
+            <!-- PILIHAN KATEGORI -->
+            <div class="kategori-wrapper">
+                <div class="kategori-pill">
+                    <button onclick="showAllLayanan(this)" class="kategori-item active">Semua Layanan</button>
+                    <button onclick="showInternal(this)" class="kategori-item">Layanan Internal</button>
+                    <button onclick="showExternal(this)" class="kategori-item">Layanan Publik</button>
+                </div>
+            </div>
         </div>
 
-
-        <!-- SEARCH (TERPISAH DARI CARD) -->
-        <form method="GET" class="search-box">
+        <!-- SEARCH -->
+        <form method="GET" class="search-box" onsubmit="return false;">
             <input type="hidden" name="kategori">
-
             <div class="search-field">
                 <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M21 21l-4.35-4.35m1.6-5.65a7.25 7.25 0 11-14.5 0 7.25 7.25 0 0114.5 0z"
                         fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
-
-                <input
-                    type="text"
-                    name="search"
-                    placeholder="Cari Layanan atau Aplikasi BPS Kolaka Timur">
+                <input type="text" id="searchInput" name="search" placeholder="Cari Layanan atau Aplikasi BPS Kolaka Timur">
             </div>
         </form>
 
-
         <!-- GRID APLIKASI -->
-        <!-- GRID APLIKASI -->
-        <div class="grid-wrapper">
+        <div class="grid-wrapper" id="formAllLayanan">
+            <?php foreach ($data as $d) : ?>
+                <div class="card">
+                    <div class="card-icon">
+                        <img src="<?= base_url('gambar/' . $d['gambarLayanan']) ?>">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title"><?= $d['namaLayanan']; ?></h3>
+                        <p class="card-desc"><?= $d['deskripsiLayanan']; ?></p>
+                        <a href="<?= $d['url']; ?>" class="btn" target="_blank">Kunjungi Layanan</a>
+                    </div>
+                </div>
+            <?php endforeach; ?>
         </div>
 
+        <!-- INTERNAL -->
+        <div id="formInternal" style="display: none;">
+            <div id="tampilInternal" class="grid-wrapper"></div>
+        </div>
+
+        <!-- EKSTERNAL -->
+        <div id="formExternal" style="display: none;">
+            <div id="tampilLayananPublik" class="grid-wrapper"></div>
+        </div>
+
+
     </section>
+
 
     <!-- FOOTER -->
     <footer id="kontak" class="footer">
@@ -127,7 +128,7 @@
             <!-- KIRI -->
             <div class="footer-left">
                 <div class="footer-logo">
-                    <img src="aassets/logo.png" alt="Logo BPS">
+                    <img src="/aassets/logo.png" alt="Logo BPS">
                 </div>
 
                 <div class="footer-text">
@@ -149,11 +150,11 @@
                     <h4>Ikuti Kami di Sosial Media</h4>
                     <div class="footer-social-wrap">
                         <div class="footer-social">
-                            <a href="#"><i class="fab fa-instagram"></i></a>
-                            <a href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#"><i class="fab fa-twitter"></i></a>
-                            <a href="#"><i class="fab fa-youtube"></i></a>
-                            <a href="#"><i class="fas fa-globe"></i></a>
+                            <a href="https://www.instagram.com/bps_statistics"><i class="fab fa-instagram"></i></a>
+                            <a href="https://web.facebook.com/bpsstatistics"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://x.com/bps_statistics"><i class="fab fa-twitter"></i></a>
+                            <a href="https://www.youtube.com/channel/UCn4IaaxHaaP-mAjZzrAtixA"><i class="fab fa-youtube"></i></a>
+
                         </div>
                         <p>
                             Kompleks Perkantoran Pemda Desa Lalingato <br>
@@ -177,11 +178,14 @@
             </div>
     </footer>
 
+    <script src="/assets/js/jquery-2.1.4.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.6.1/dist/sweetalert2.all.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const cards = document.querySelectorAll(".card");
 
-            /* ================= SCROLL ANIMATION (BERULANG) ================= */
+            // ===== Scroll Animation =====
             const observer = new IntersectionObserver(entries => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -193,20 +197,161 @@
             }, {
                 threshold: 0.15
             });
-
             cards.forEach(card => observer.observe(card));
 
-            /* ================= KLIK KATEGORI ================= */
-            document.querySelectorAll(".kategori-form button").forEach(btn => {
-                btn.addEventListener("click", () => {
-                    cards.forEach(card => {
-                        card.classList.remove("show");
-                        void card.offsetHeight; // reset animasi
-                        card.classList.add("show");
-                    });
-                });
+            // ===== Pencarian =====
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('keyup', function() {
+                clearTimeout(this.delay);
+                this.delay = setTimeout(() => searchLayanan(), 400);
             });
         });
+
+        // Fungsi reset button aktif
+        function setActiveButton(btn) {
+            document.querySelectorAll('.kategori-item').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        // ===== Fungsi tampil kategori =====
+        function showAllLayanan(btn) {
+            setActiveButton(btn);
+            $('#formAllLayanan').show();
+            $('#formInternal').hide();
+            $('#formExternal').hide();
+            document.querySelector('input[name="kategori"]').value = '';
+        }
+
+        function showInternal(btn) {
+            setActiveButton(btn);
+            $('#formInternal').show();
+            $('#formAllLayanan').hide();
+            $('#formExternal').hide();
+            document.querySelector('input[name="kategori"]').value = 'internal';
+
+            $.ajax({
+                url: '/homeInternal',
+                method: 'POST',
+                dataType: 'JSON',
+                success: function(response) {
+                    let html = '';
+                    if (response.status === '1') {
+                        response.data.forEach(function(data) {
+                            html += `<div class="card">
+                        <div class="card-icon"><img src="<?= base_url('gambar/') ?>${data.gambarLayanan}"></div>
+                        <div class="card-content">
+                            <h3 class="card-title">${data.namaLayanan}</h3>
+                            <p class="card-desc">${data.deskripsiLayanan}</p>
+                            <a href="${data.url}" target="_blank" class="btn">Kunjungi Layanan</a>
+                        </div>
+                    </div>`;
+                        });
+                        $('#tampilInternal').html(html);
+                    } else {
+                        $('#tampilInternal').html('<p>' + response.pesan + '</p>');
+                    }
+                },
+                error: function() {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Terjadi kesalahan pada server!'
+                    });
+                }
+            });
+        }
+
+        function showExternal(btn) {
+            setActiveButton(btn);
+            $('#formExternal').show();
+            $('#formAllLayanan').hide();
+            $('#formInternal').hide();
+            document.querySelector('input[name="kategori"]').value = 'external';
+
+            $.ajax({
+                url: '/homeEksternal',
+                method: 'POST',
+                dataType: 'JSON',
+                success: function(response) {
+                    let html = '';
+                    if (response.status === '1') {
+                        response.data.forEach(function(data) {
+                            html += `<div class="card">
+                        <div class="card-icon"><img src="<?= base_url('gambar/') ?>${data.gambarLayanan}"></div>
+                        <div class="card-content">
+                            <h3 class="card-title">${data.namaLayanan}</h3>
+                            <p class="card-desc">${data.deskripsiLayanan}</p>
+                            <a href="${data.url}" target="_blank" class="btn">Kunjungi Layanan</a>
+                        </div>
+                    </div>`;
+                        });
+                        $('#tampilLayananPublik').html(html);
+                    } else {
+                        $('#tampilLayananPublik').html('<p>' + response.pesan + '</p>');
+                    }
+                },
+                error: function() {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Terjadi kesalahan pada server!'
+                    });
+                }
+            });
+        }
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+            const searchInput = document.getElementById('searchInput');
+            const formSearch = document.querySelector('.search-box');
+
+            //cegah submit (ENTER)
+            formSearch.addEventListener('submit', e => e.preventDefault());
+
+            searchInput.addEventListener('keyup', function() {
+                const keyword = this.value.toLowerCase();
+
+                let cards;
+
+                //tentukan container aktif
+                if ($('#formInternal').is(':visible')) {
+                    cards = document.querySelectorAll('#tampilInternal .card');
+                } else if ($('#formExternal').is(':visible')) {
+                    cards = document.querySelectorAll('#tampilLayananPublik .card');
+                } else {
+                    cards = document.querySelectorAll('#formAllLayanan .card');
+                }
+
+                cards.forEach(card => {
+                    const text = card.innerText.toLowerCase();
+                    card.style.display = text.includes(keyword) ? '' : 'none';
+                });
+            });
+
+        });
+    </script>
+    <script>
+        const text = "Satu portal terpadu yang menghadirkan berbagai layanan resmi BPS Kolaka Timur. Memudahkan pegawai maupun masyarakat dalam mengakses informasi, data, dan aplikasi resmi secara aman, cepat, dan efisien dalam satu tempat.";
+
+        const element = document.getElementById("typingText");
+        let index = 0;
+
+        function typeEffect() {
+            if (index < text.length) {
+                element.innerHTML += text.charAt(index);
+                index++;
+                setTimeout(typeEffect, 35); // kecepatan mengetik
+            } else {
+                setTimeout(() => {
+                    element.innerHTML = "";
+                    index = 0;
+                    typeEffect();
+                }, 4000); // jeda sebelum ulang
+            }
+        }
+
+        typeEffect();
     </script>
 </body>
 

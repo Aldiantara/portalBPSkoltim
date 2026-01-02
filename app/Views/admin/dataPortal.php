@@ -12,49 +12,61 @@
                     Tambah Website
                 </button>
                 <br>
-                <div class="table-header">
-                    <?php echo $title ?>
-                </div>
-                <div>
-                    <table id="dynamic-table" class="table table-striped table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th>Nama layanan</th>
-                                <th>URL Layanan</th>
-                                <th>Sampul Layanan</th>
-                                <th>Deskripsi</th>
-                                <th>Kategori</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($data as $row) : ?>
-                                <tr>
-                                    <td style="text-align: center"><?= $row['namaLayanan']; ?></td>
-                                    <td style="text-align: center"><a href="<?= $row['url']; ?>" target="_blank"><?= $row['url']; ?></a></td>
-                                    <td style="text-align: center">
-                                        <img align="center" style="height:80px; width:100px" src="<?= base_url('gambar/' . $row['gambarLayanan']) ?>">
-                                    </td>
-                                    <td style="text-align: center;"><?= $row['deskripsiLayanan']; ?></td>
-                                    <td style="text-align: center"><?= $row['kategori']; ?></td>
-                                    <td style="text-align: center">
-                                        <div class="hidden-sm hidden-xs action-buttons">
-                                            <a href="#" onclick="editDataLayanan(<?= $row['idLayanan']; ?>);" id="editLayanan" name="editLayanan" class="tooltip-success" data-rel="tooltip" title="Edit">
-                                                <span class="green">
-                                                    <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
-                                                </span>
-                                            </a>
-                                            <a href="#" onclick="hapusDataLayanan(<?= $row['idLayanan']; ?>,'<?= $row['gambarLayanan']; ?>');" id="hapusLayanan" name="hapusLayanan" class="tooltip-error" data-rel="tooltip" title="Delete">
-                                                <span class="red">
-                                                    <i class="ace-icon fa fa-trash-o bigger-120"></i>
-                                                </span>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="clearfix">
+                            <div class="pull-right tableTools-container"></div>
+                        </div>
+                        <div class="table-header">
+                            <?php echo $title ?>
+                        </div>
+                        <!-- div.table-responsive -->
+
+                        <!-- div.dataTables_borderWrap -->
+                        <div class="table-responsive">
+                            <table id="myTable" class="table table-striped table-bordered table-hover" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Nama Layanan</th>
+                                        <th>URL Layanan</th>
+                                        <th>Sampul Layanan</th>
+                                        <th>Deskripsi</th>
+                                        <th>Kategori</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($data as $row) : ?>
+                                        <tr>
+                                            <td style="text-align: center"><?= $row['namaLayanan']; ?></td>
+                                            <td style="text-align: center; max-width:820px; white-space: normal !important; word-break: break-all; overflow-wrap: break-word;">
+                                                <a href="<?= $row['url']; ?>" target="_blank"><?= $row['url']; ?></a>
+                                            </td>
+                                            <td style="text-align: center">
+                                                <img align="center" style="height:80px; width:100px" src="<?= base_url('gambar/' . $row['gambarLayanan']) ?>">
+                                            </td>
+                                            <td style="text-align: center; "><?= $row['deskripsiLayanan']; ?></td>
+                                            <td style="text-align: center"><?= $row['kategori']; ?></td>
+                                            <td style="text-align: center">
+                                                <div>
+                                                    <a href="#" onclick="editDataLayanan(<?= $row['idLayanan']; ?>);" id="editLayanan" name="editLayanan" class="tooltip-success" data-rel="tooltip" title="Edit">
+                                                        <span class="green">
+                                                            <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                                        </span>
+                                                    </a>
+                                                    <a href="#" onclick="hapusDataLayanan(<?= $row['idLayanan']; ?>,'<?= $row['gambarLayanan']; ?>');" id="hapusLayanan" name="hapusLayanan" class="tooltip-error" data-rel="tooltip" title="Delete">
+                                                        <span class="red">
+                                                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- akhir data Website -->

@@ -57,14 +57,14 @@
                                             <fieldset>
                                                 <label class="block clearfix">
                                                     <span class="block input-icon input-icon-right">
-                                                        <input type="text" class="form-control" placeholder="Username" id="username" required />
+                                                        <input type="text" class="form-control" placeholder="Input Username" id="username" autocomplete="username" required />
                                                         <i class="ace-icon fa fa-user"></i>
                                                     </span>
                                                 </label>
 
                                                 <label class="block clearfix">
                                                     <span class="block input-icon input-icon-right">
-                                                        <input type="password" class="form-control" placeholder="Masukkan Password" id="password" />
+                                                        <input type="password" class="form-control" placeholder="Input Password" id="password" autocomplete="current-password" required />
                                                         <i class="ace-icon fa fa-lock"></i>
                                                     </span>
                                                 </label>
@@ -74,12 +74,12 @@
                                                 <div class="clearfix">
                                                     <label class="inline">
                                                         <input type="checkbox" class="ace" />
-                                                        <span class="lbl"> Lihat Password</span>
+                                                        <span class="lbl" id="showPassword"> Lihat Password</span>
                                                     </label>
 
                                                     <button type="button" class="width-35 pull-right btn btn-sm btn-primary" onclick="login()">
                                                         <i class="ace-icon fa fa-key"></i>
-                                                        <span class="bigger-110">Login</span>
+                                                        <span class="bigger-110" onclick="login()">Login</span>
                                                     </button>
                                                 </div>
 
@@ -162,7 +162,60 @@
         });
     </script>
     <script type="text/javascript">
+        //fungsi untuk menampilkan password
+        $('#showPassword').on('click', function() {
+            const password = $('#password');
+            const icon = $(this).find('i');
 
+            if (password.attr('type') === 'password') {
+                password.attr('type', 'text');
+                icon.removeClass('fa-eye').addClass('fa-eye-slash');
+            } else {
+                password.attr('type', 'password');
+                icon.removeClass('fa-eye-slash').addClass('fa-eye');
+            }
+        });
+        //tutup fungsi untuk menampilkan password
+
+        //fungsi login admin
+        function login() {
+            let username = $('#username').val();
+            let password = $('#password').val();
+
+            $.ajax({
+                type: "POST",
+                url: "/loginFungsi",
+                data: {
+                    username: username,
+                    password: password
+                },
+                dataType: "JSON",
+                success: function(data) {
+                    if (data.status === 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil',
+                            text: data.message
+                        }).then(() => {
+                            window.location.href = "<?= base_url('/contentDashboard') ?>";
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal',
+                            text: data.message
+                        });
+                    }
+                },
+                error: function() {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Terjadi kesalahan pada server!'
+                    });
+                }
+            });
+        }
     </script>
 </body>
 

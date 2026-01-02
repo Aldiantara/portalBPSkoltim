@@ -44,11 +44,11 @@
                     <div class="login-container">
                         <div class="center">
                             <h1>
-                                <i class="ace-icon fa fa-leaf green"></i>
-                                <span class="red">Ace</span>
-                                <span class="white" id="id-text2">Application</span>
+                                <img src="assets/images/logo/logo_bps.png" style="width: 50px; height: 50px;" alt="">
+                                <span class="red">BPS</span>
+                                <span class="white" id="id-text2">KOLAKA TIMUR</span>
                             </h1>
-                            <h4 class="blue" id="id-company-text">&copy; Company Name</h4>
+                            <h4 class="blue" id="id-company-text">&copy; Pusat Layanan BPS Kolaka Timur</h4>
                         </div>
 
                         <div class="space-6"></div>
@@ -69,37 +69,29 @@
                                             <fieldset>
                                                 <label class="block clearfix">
                                                     <span class="block input-icon input-icon-right">
-                                                        <input type="email" class="form-control" placeholder="Email" />
-                                                        <i class="ace-icon fa fa-envelope"></i>
-                                                    </span>
-                                                </label>
-
-                                                <label class="block clearfix">
-                                                    <span class="block input-icon input-icon-right">
-                                                        <input type="text" class="form-control" placeholder="Username" />
+                                                        <input type="namaLengkap" id="namaLengkap" name="namaLengkap" class="form-control" placeholder="Nama Lengkap" autofocus />
                                                         <i class="ace-icon fa fa-user"></i>
                                                     </span>
                                                 </label>
 
                                                 <label class="block clearfix">
                                                     <span class="block input-icon input-icon-right">
-                                                        <input type="password" class="form-control" placeholder="Password" />
+                                                        <input type="text" id="username" name="username" class="form-control" placeholder="Username" autocomplete="username" />
+                                                        <i class="ace-icon fa fa-user"></i>
+                                                    </span>
+                                                </label>
+
+                                                <label class="block clearfix">
+                                                    <span class="block input-icon input-icon-right">
+                                                        <input type="password" id="password" name="password" class="form-control" placeholder="Password" autocomplete="new-password" />
                                                         <i class="ace-icon fa fa-lock"></i>
                                                     </span>
                                                 </label>
 
                                                 <label class="block clearfix">
                                                     <span class="block input-icon input-icon-right">
-                                                        <input type="password" class="form-control" placeholder="Repeat password" />
+                                                        <input type="password" id="konfirmasiPassword" name="konfirmasiPassword" class="form-control" placeholder="Konfirmasi Password" autocomplete="new-password" />
                                                         <i class="ace-icon fa fa-retweet"></i>
-                                                    </span>
-                                                </label>
-
-                                                <label class="block">
-                                                    <input type="checkbox" class="ace" />
-                                                    <span class="lbl">
-                                                        I accept the
-                                                        <a href="#">User Agreement</a>
                                                     </span>
                                                 </label>
 
@@ -111,7 +103,7 @@
                                                         <span class="bigger-110">Reset</span>
                                                     </button>
 
-                                                    <button type="button" class="width-65 pull-right btn btn-sm btn-success">
+                                                    <button type="button" onclick="register()" class="width-65 pull-right btn btn-sm btn-success">
                                                         <span class="bigger-110">Register</span>
 
                                                         <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
@@ -123,16 +115,9 @@
 
                                     <div class="toolbar clearfix">
                                         <div>
-                                            <a href="#" data-target="#forgot-box" class="forgot-password-link">
+                                            <a href="/contentDashboard" class="forgot-password-link">
                                                 <i class="ace-icon fa fa-arrow-left"></i>
-                                                I forgot my password
-                                            </a>
-                                        </div>
-
-                                        <div>
-                                            <a href="#" data-target="#signup-box" class="user-signup-link">
-                                                I want to register
-                                                <i class="ace-icon fa fa-arrow-right"></i>
+                                                Batal
                                             </a>
                                         </div>
                                     </div>
@@ -173,6 +158,8 @@
     <script type="text/javascript">
         if ('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
     </script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.6.1/dist/sweetalert2.all.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- inline scripts related to this page -->
     <script type="text/javascript">
@@ -213,61 +200,115 @@
 
         });
     </script>
-</body>
+    <script type="text/javascript">
+        function register() {
+            let namaLengkap = $('#namaLengkap').val();
+            let username = $('#username').val();
+            let password = $('#password').val();
+            let konfirmasiPassword = $('#konfirmasiPassword').val();
 
-</html>
-<!DOCTYPE html>
-<html lang="id">
+            // Validasi input
+            if (namaLengkap == "") {
+                Swal.fire({
+                    title: "error!",
+                    text: "Nama Lengkap harus diisi!",
+                    icon: "error",
+                    confirmButtonText: 'OK'
 
-<head>
-    <meta charset="UTF-8">
-    <title>Login Admin | Portal Layanan Digital BPS Kolaka Timur</title>
-    <link rel="stylesheet" href="aassets/style_login.css">
-</head>
+                });
+                return false;
+            }
+            if (username == "") {
+                Swal.fire({
+                    title: "error!",
+                    text: "Username harus diisi!",
+                    icon: "error",
+                    confirmButtonText: 'OK'
+                })
+                return false;
+            }
+            if (password == "") {
+                Swal.fire({
+                    title: "error!",
+                    text: "Password harus diisi!",
+                    icon: "error",
+                    confirmButtonText: 'OK'
+                })
+                return false;
+            }
+            if (konfirmasiPassword == "") {
+                Swal.fire({
+                    title: "error!",
+                    text: "Konfirmasi Password harus diisi!",
+                    icon: "error",
+                    confirmButtonText: 'OK'
+                })
+                return false;
+            }
+            if (password != konfirmasiPassword) {
+                Swal.fire({
+                    title: "error!",
+                    text: "Password dan Konfirmasi Password tidak sesuai!",
+                    icon: "error",
+                    confirmButtonText: 'OK'
+                })
+                return false;
 
-<body>
+            }
+            $.ajax({
+                url: "/registerAdmin",
+                type: "POST",
+                dataType: "JSON",
+                data: {
+                    'namaLengkap': namaLengkap,
+                    'username': username,
+                    'password': password
+                },
+                success: function(data) {
+                    console.log(data);
+                    // Swal.fire({
+                    //     title: "Success!",
+                    //     text: "Berhasil Melakukan Registrasi!",
+                    //     icon: "success",
+                    //     confirmButtonText: 'OK'
+                    // }).then((result) => {
+                    //     if (result.isConfirmed) {
+                    //         window.location.href = "<?= base_url('/dashboard') ?>";
+                    //     }
+                    // });
+                    if (data.status === 'error') {
+                        Swal.fire({
+                            icon: 'error',
+                            title: "Oops...",
+                            text: data.message
+                        });
+                        return;
+                    }
 
-    <div class="auth-bg"></div>
+                    if (data.status === 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil',
+                            text: data.message
+                        }).then(() => {
+                            window.location.href = "<?= base_url('dashboard') ?>";
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Terjadi kesalahan pada server!",
+                        confirmButtonText: 'OK'
+                    });
+                }
+            });
 
-    <div class="auth-wrapper">
-        <div class="auth-card">
-
-            <!-- PANEL BRAND -->
-            <div class="auth-brand">
-                <div class="brand-overlay"></div>
-                <div class="brand-content">
-                    <h1>BPS</h1>
-                    <h2>Portal Layanan Digital</h2>
-                    <p>
-                        Badan Pusat Statistik<br>
-                        Kabupaten Kolaka Timur
-                    </p>
-                </div>
-            </div>
-
-            <!-- PANEL FORM -->
-            <div class="auth-form">
-                <h3>Welcome!</h3>
-                <p class="subtitle">Silahkan masuk untuk mengelola layanan</p>
-
-                <form method="post">
-                    <div class="input-group">
-                        <input type="text" name="username" required>
-                        <label>Username</label>
-                    </div>
-
-                    <div class="input-group">
-                        <input type="password" name="password" required>
-                        <label>Password</label>
-                    </div>
-
-                    <button name="login">Masuk</button>
-                </form>
-            </div>
-
-        </div>
-    </div>
-
+            // Lakukan proses pendaftaran (misalnya, kirim data ke server)
+            // alert('Pendaftaran berhasil untuk ' + namaLengkap + ' dengan username ' + username);
+        }
+    </script>
 </body>
 
 </html>
